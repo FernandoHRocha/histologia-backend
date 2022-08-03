@@ -2,6 +2,7 @@ version: '3.1'
 services:
 #MYSQL DATABASE
   db:
+    container_name: database
     build: ./db
     restart: always
     environment:
@@ -16,6 +17,7 @@ services:
 
   #PHPMYADMIN SGBD
   phpmyadmin:
+    container_name: sgbd
     build: ./phpmyadmin
     restart: always
     environment:
@@ -29,6 +31,7 @@ services:
 
     # PHP LARAVEL
   histologia-backend:
+    container_name: server
     build: ./backend
     volumes:
         - ./backend/histologia-backend:/usr/share/nginx/
