@@ -1,0 +1,44 @@
+version: '3.1'
+services:
+#MYSQL DATABASE
+  db:
+    build: ./db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=histologia
+      - MYSQL_ROOT_PASSWORD=123
+    volumes:
+      - ./db/database:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  #PHPMYADMIN SGBD
+  phpmyadmin:
+    build: ./phpmyadmin
+    restart: always
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=123
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+    # PHP LARAVEL
+  histologia-backend:
+    build: ./backend
+    volumes:
+        - ./backend/histologia-backend:/usr/share/nginx/
+    depends_on:
+        - db
+    ports:
+      - "8084:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
