@@ -1,21 +1,30 @@
 CREATE DATABASE histologia;
 
-CREATE TABLE lamina (
-    idlamina INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(120) NOT NULL UNIQUE,
+USE histologia;
+
+CREATE TABLE sheet_group (
+    idsheet_group INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255)
+);
+
+CREATE TABLE sheet (
+    idsheet INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(120) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    thumbnail MEDIUMBLOB NOT NULL
 );
 
 CREATE TABLE slide (
     idslide INT AUTO_INCREMENT PRIMARY KEY,
-    lamina_idlamina INT NOT NULL,
+    sheet_idsheet INT NOT NULL,
     level INT NOT NULL,
     row INT NOT NULL,
     col INT NOT NULL,
     content MEDIUMBLOB NOT NULL,
-    CONSTRAINT FK_slide_lamina_idlamina
-        FOREIGN KEY (lamina_idlamina)
-        REFERENCES lamina (idlamina)
+    CONSTRAINT FK_slide_sheet_idsheet
+        FOREIGN KEY (sheet_idsheet)
+        REFERENCES sheet (idsheet)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
