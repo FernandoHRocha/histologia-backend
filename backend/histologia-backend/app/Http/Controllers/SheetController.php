@@ -24,8 +24,17 @@ class SheetController extends Controller
     }
 
     public function store(Request $request) {
-        $sheet = $this->validate($request, Sheet::$createRules);
-        $sheet = Sheet::insert($sheet);
-        return response(json_encode($sheet), 201);
+        try{
+            $sheet = $this->validate($request, Sheet::$createRules);
+            $sheet = Sheet::insertGetId($sheet);
+            return response(json_encode(['idsheet', $sheet]), 201);
+        } catch(\Exception $e) {
+            $name = $request->get('name', '');
+            if(!$name) {
+                throw $e;
+            }
+            $sheet = Sheet::select('idsheet')->firstWhere('name', $name);
+            return response(json_encode(['idsheet', $sheet->idsheet]), 200);
+        }
     }
 }
