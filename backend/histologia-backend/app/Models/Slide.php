@@ -22,11 +22,11 @@ class Slide extends Model
     ];
 
     public static $createRules = [
-        'sheet_idsheet' => 'required|digit',
-        'level'         => 'required|digit',
-        'row'           => 'required|digit',
-        'col'           => 'required|digit',
-        'content'       => 'required|'
+        'sheet_idsheet' => 'required|integer',
+        'level'         => 'required|integer',
+        'row'           => 'required|integer',
+        'col'           => 'required|integer',
+        'content'       => 'required'
     ];
 
     public function sheet() {

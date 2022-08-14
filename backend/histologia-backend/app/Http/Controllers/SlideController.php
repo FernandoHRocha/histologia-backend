@@ -19,5 +19,7 @@ class SlideController extends Controller
 
     public function store(Request $request) {
         $slide = $this->validate($request, Slide::$createRules);
+        $slide = Slide::insertGetId($slide);
+        return response(json_encode(['idslide', $slide]), 201);
     }
 }
