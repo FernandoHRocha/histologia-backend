@@ -6,7 +6,6 @@ services:
     build: ./db
     restart: always
     environment:
-      - MYSQL_DATABASE=histologia
       - MYSQL_ROOT_PASSWORD=123
     volumes:
       - ./db/database:/var/lib/mysql
@@ -26,6 +25,8 @@ services:
       - PMA_PASSWORD=123
     ports:
       - "8080:80"
+    depends_on:
+      - db
     networks:
       - app-network
 
